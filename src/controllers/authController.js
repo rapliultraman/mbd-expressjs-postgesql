@@ -29,8 +29,8 @@ const loginUser = async (req, res) => {
     const token = jwt.sign({ email, isAdmin }, process.env.SECRET_KEY, { expiresIn: '1h' });
 
     const responseMessage = isAdmin
-      ? { message: 'Login berhasil sebagai Admin', redirectTo: '/admin/home', token }
-      : { message: 'Login berhasil sebagai User', redirectTo: '/user/home', token };
+      ? { message: 'Login berhasil sebagai Admin', redirectTo: '/admin/homeadmin', token }
+      : { message: 'Login berhasil sebagai User', redirectTo: '/user/homeuser', token };
 
     res.status(200).json(responseMessage);
   } catch (error) {

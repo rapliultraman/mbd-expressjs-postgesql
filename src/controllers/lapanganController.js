@@ -15,7 +15,7 @@ const createLapangan = async (req, res) => {
 
   const showLapangan = async (req, res) => {
     try {
-      const { rows } = await db.query(`CALL show_lapangan()`);
+      const { rows } = await db.query(`SELECT * FROM show_lapangan()`);
       res.status(200).json(rows);
     } catch (error) {
       res.status(500).json({ error: 'Terjadi kesalahan pada server.' });
