@@ -4,12 +4,14 @@ const createBooking = async (req, res) => {
   const { email, nama_lapangan, tanggal_booking, jam_mulai, jam_selesai, penawaran_id } = req.body;
   try {
     const result = await db.query(
-      `CALL create_booking($1, $2, $3, $4, $5);`,
+      `CALL create_booking($1, $2, $3, $4, $5, $6);`,
       [email, nama_lapangan, tanggal_booking, jam_mulai, jam_selesai, penawaran_id || null]
     );
-
     res.status(201).json({ message: 'Booking berhasil dibuat.', result });
   } catch (error) {
+    if (error.code === 'P0001') {
+      return res.status(400).json({ error: error.message });
+    }
     console.error('Error saat membuat booking:', error);
     res.status(500).json({ error: 'Terjadi kesalahan saat membuat booking.' });
   }
