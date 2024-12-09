@@ -19,21 +19,17 @@ const buatPenawaran = async (req, res) => {
 const lihatPenawaran = async (req, res) => {
   const { email } = req.query;
 
-  // Validasi parameter email
   if (!email) {
     return res.status(400).json({ message: "Email parameter is required." });
   }
 
   try {
-    // Eksekusi query ke database
     const { rows } = await db.query(`SELECT * FROM get_penawaran_user($1)`, [email]);
 
-    // Cek apakah ada data yang ditemukan
     if (rows.length === 0) {
       return res.status(404).json({ message: "No penawaran found for the given email." });
     }
 
-    // Berhasil, kembalikan data penawaran
     res.status(200).json(rows);
   } catch (error) {
     console.error("Database error:", error); // Log error untuk debugging

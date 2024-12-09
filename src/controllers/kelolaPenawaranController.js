@@ -12,12 +12,22 @@ const viewPenawaranAdmin = async (req, res) => {
   }
 };
 
+const pesanPersetujuanPenawaran = async(req, res) => {
+ const { penawaran_id, status, pesan} = req.body;
 
+ try {
+  await db.query(`CALL admin_update_penawaran($1,$2,$3)`,[penawaran_id, status, pesan]);
+  res.status(200).json({message:"penawaran berhasil di perbarui"});
+ } catch (error) {
+  res.status(500).json({message:"error bang"})
+ }
+};
 
 
 
 
 
 module.exports = {
-    viewPenawaranAdmin
+    viewPenawaranAdmin,
+    pesanPersetujuanPenawaran
 };
